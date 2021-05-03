@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2021 at 04:25 AM
+-- Generation Time: May 03, 2021 at 11:36 AM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.15
 
@@ -49,6 +49,18 @@ INSERT INTO `barangs` (`ID`, `nama_barang`, `nama_penjual`, `harga`, `photo`, `m
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `bids`
+--
+
+CREATE TABLE `bids` (
+  `nama` varchar(100) NOT NULL,
+  `alamat` text NOT NULL,
+  `harga_tawar` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -82,6 +94,12 @@ INSERT INTO `users` (`id`, `nama_lengkap`, `username`, `password`, `gender`, `tg
 --
 ALTER TABLE `barangs`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `bids`
+--
+ALTER TABLE `bids`
+  ADD PRIMARY KEY (`nama`);
 
 --
 -- Indexes for table `users`

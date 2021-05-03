@@ -31,7 +31,7 @@ CREATE TABLE `bids` (
   `nama` varchar(100) NOT NULL,
   `alamat` text NOT NULL,
   `harga_tawar` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
