@@ -5,9 +5,6 @@
  */
 package auction;
 
-import Koneksi.Koneksi;
-import java.sql.Connection;
-
 /**
  *
  * @author nadindradwi
@@ -18,7 +15,8 @@ public class Auction {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Connection con = new Koneksi().konek();
+        Login login = new Login();
+        login.main(args);
     }
     
 }

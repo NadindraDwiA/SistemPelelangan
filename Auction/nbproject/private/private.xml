@@ -3,13 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/Halaman.java</file>
             <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/Register.java</file>
+            <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/Barang.java</file>
             <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/Auction.java</file>
+            <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/Auth.java</file>
             <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/Admin.java</file>
-            <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/DetailItem.java</file>
             <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/Koneksi/Koneksi.java</file>
             <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/User.java</file>
+            <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/AuthUser.java</file>
             <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/Login.java</file>
+            <file>file:/E:/PROJECTS/Pelelangan/SistemPelelangan/Auction/src/auction/AuthAdmin.java</file>
         </group>
     </open-files>
 </project-private>
