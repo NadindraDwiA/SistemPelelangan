@@ -9,8 +9,7 @@ import Koneksi.Koneksi;
 import java.sql.*;
 
 public class Bids {
-    private String nama, alamat;
-    private int harga_tawar, kode;
+    private int harga_tawar;
     private Connection con = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
@@ -33,34 +32,6 @@ public class Bids {
         this.harga_tawar = harga_tawar;
     }
     
-//    public void setNama(String nama)
-//    {
-//        this.nama = nama;
-//    }
-//    
-//    public String getNama()
-//    {
-//        return nama;
-//    }
-//    
-//    public void setAlamat(String alamat){
-//        this.alamat = alamat;
-//    }
-//    
-//    public String getAlamat()
-//    {
-//        return alamat;
-//    }
-//    
-//    public void setKode(int kode){
-//        this.kode = kode;
-//    }
-//    
-//    public int getKode()
-//    {
-//        return kode;
-//    }
-//    
     public ResultSet tampilData()
     {
         query = "select * from bids";
