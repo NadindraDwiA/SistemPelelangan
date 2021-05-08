@@ -22,6 +22,18 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
     ResultSet rs = null;
     Statement st = null;
     DefaultTableModel tabelmodel;
+    String imgpath = null;
+
+    public void reset_text() {
+        ID.setText("");
+        nama_barang.setText("");
+        nama_penjual.setText("");
+        harga.setText("");
+        mulai.setDate(null);
+        akhir.setDate(null);
+        image.setIcon(null);
+        imgpath = null;
+    }
 
     public Admin() {
         initComponents();
@@ -68,6 +80,7 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
         deletebtn = new javax.swing.JButton();
         uploadbtn = new javax.swing.JButton();
         detailbtn = new javax.swing.JButton();
+        refreshBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel_barang = new javax.swing.JTable();
@@ -146,7 +159,7 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
                 editbtnActionPerformed(evt);
             }
         });
-        jPanel2.add(editbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 80, 40));
+        jPanel2.add(editbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 80, 40));
 
         deletebtn.setBackground(new java.awt.Color(0, 102, 255));
         deletebtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -157,7 +170,7 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
                 deletebtnActionPerformed(evt);
             }
         });
-        jPanel2.add(deletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 80, 40));
+        jPanel2.add(deletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 80, 40));
 
         uploadbtn.setBackground(new java.awt.Color(0, 102, 255));
         uploadbtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -180,6 +193,17 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
             }
         });
         jPanel2.add(detailbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 20, 73, 40));
+
+        refreshBtn.setBackground(new java.awt.Color(0, 102, 255));
+        refreshBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        refreshBtn.setForeground(new java.awt.Color(255, 255, 255));
+        refreshBtn.setText("Refresh");
+        refreshBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshBtnActionPerformed(evt);
+            }
+        });
+        jPanel2.add(refreshBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 80, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 920, 80));
 
@@ -307,7 +331,7 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
             delete();
         }
     }//GEN-LAST:event_deletebtnActionPerformed
-    String imgpath = null;
+    
     private void uploadbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadbtnActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
@@ -325,6 +349,10 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
     private void detailbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detailbtnActionPerformed
         detail();
     }//GEN-LAST:event_detailbtnActionPerformed
+
+    private void refreshBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshBtnActionPerformed
+        reset_text();
+    }//GEN-LAST:event_refreshBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -384,6 +412,7 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
     private com.toedter.calendar.JDateChooser mulai;
     private javax.swing.JTextField nama_barang;
     private javax.swing.JTextField nama_penjual;
+    private javax.swing.JButton refreshBtn;
     private javax.swing.JTable tabel_barang;
     private javax.swing.JButton uploadbtn;
     // End of variables declaration//GEN-END:variables
@@ -412,6 +441,7 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
             JOptionPane.showMessageDialog(this, "Barang dimasukkan");
             con.close();
             DisplayTable();
+            reset_text();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, ex);
         } catch (FileNotFoundException ex) {
@@ -428,6 +458,7 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
             Del.executeUpdate(Query);
             JOptionPane.showMessageDialog(this, "Barang terhapus");
             DisplayTable();
+            reset_text();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
@@ -449,12 +480,13 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
             UpdateQuery.setString(2, nama_penjual.getText());
             UpdateQuery.setInt(3, Integer.valueOf(harga.getText()));
             UpdateQuery.setBlob(4, img);
-            UpdateQuery.setString(6, strmulai);
-            UpdateQuery.setString(7, strakhir);
-            UpdateQuery.setInt(5, Key);
+            UpdateQuery.setString(5, strmulai);
+            UpdateQuery.setString(6, strakhir);
+            UpdateQuery.setInt(7, Key);
             if (UpdateQuery.executeUpdate() == 1) {
                 JOptionPane.showMessageDialog(this, "Barang diupdate");
                 DisplayTable();
+                reset_text();
             } else {
                 JOptionPane.showMessageDialog(this, "Missing Information");
             }
