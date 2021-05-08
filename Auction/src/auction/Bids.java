@@ -33,34 +33,34 @@ public class Bids {
         this.harga_tawar = harga_tawar;
     }
     
-    public void setNama(String nama)
-    {
-        this.nama = nama;
-    }
-    
-    public String getNama()
-    {
-        return nama;
-    }
-    
-    public void setAlamat(String alamat){
-        this.alamat = alamat;
-    }
-    
-    public String getAlamat()
-    {
-        return alamat;
-    }
-    
-    public void setKode(int kode){
-        this.kode = kode;
-    }
-    
-    public int getKode()
-    {
-        return kode;
-    }
-    
+//    public void setNama(String nama)
+//    {
+//        this.nama = nama;
+//    }
+//    
+//    public String getNama()
+//    {
+//        return nama;
+//    }
+//    
+//    public void setAlamat(String alamat){
+//        this.alamat = alamat;
+//    }
+//    
+//    public String getAlamat()
+//    {
+//        return alamat;
+//    }
+//    
+//    public void setKode(int kode){
+//        this.kode = kode;
+//    }
+//    
+//    public int getKode()
+//    {
+//        return kode;
+//    }
+//    
     public ResultSet tampilData()
     {
         query = "select * from bids";
@@ -71,19 +71,24 @@ public class Bids {
         return rs;
     }
     
-    public void simpanData(int kode, String nama, String alamat, int harga_tawar)
+    public void simpanData(String id_barang, int harga_tawar)
     {
-        query = "insert into bids values(?,?,?,?)";
+        int idUser = Integer.parseInt(Auth.id);
+        String namaUser = Auth.nama;
+        String alamatUser = Auth.alamat;
+        
+        query = "INSERT INTO bids (id_barang, id_user, nama, alamat, harga_tawar) VALUES(?,?,?,?,?)";
         try {
             pst = con.prepareStatement(query);
-            pst.setInt(1, kode);
-            pst.setString(2, nama);
-            pst.setString(3, alamat);
-            pst.setInt(4, harga_tawar);
+            pst.setString(1, id_barang);
+            pst.setInt(2, idUser);
+            pst.setString(3, namaUser);
+            pst.setString(4, alamatUser);
+            pst.setInt(5, harga_tawar);
             pst.executeUpdate();
             pst.close();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error Simpan Data: " + e);
         }
     }
 }

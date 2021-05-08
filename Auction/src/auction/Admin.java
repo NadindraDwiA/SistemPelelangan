@@ -1,5 +1,5 @@
-
 package auction;
+
 import Koneksi.Koneksi;
 import java.awt.Image;
 import java.io.File;
@@ -14,20 +14,37 @@ import java.util.logging.Logger;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import net.proteanit.sql.DbUtils;
 
 public final class Admin extends javax.swing.JFrame implements Halaman {
 
-    Connection con = null;
+    Connection con = new Koneksi().konek();
     PreparedStatement pst = null;
     ResultSet rs = null;
     Statement st = null;
-    
+    DefaultTableModel tabelmodel;
+
     public Admin() {
         initComponents();
         GetTable();
+
+        tabelmodel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        tabel_barang.setModel(tabelmodel);
+        tabelmodel.addColumn("ID");
+        tabelmodel.addColumn("Nama Barang");
+        tabelmodel.addColumn("Nama Penjual");
+        tabelmodel.addColumn("Harga");
+        tabelmodel.addColumn("Photo");
+        tabelmodel.addColumn("Mulai");
+        tabelmodel.addColumn("Akhir");
+
         DisplayTable();
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -60,146 +77,114 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
         image = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Nama Barang");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 30));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel2.setText("Harga");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, -1, 30));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("ID");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, 30));
+        jPanel1.add(nama_barang, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 30, 150, 30));
 
+        ID.setEditable(false);
+        ID.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel1.add(ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 150, 30));
+        jPanel1.add(harga, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 160, 30));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setText("Nama Penjual");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 30, -1, 30));
+        jPanel1.add(nama_penjual, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 30, 160, 30));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel6.setText("Mulai");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, 30));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("Akhir");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, -1, 30));
 
+        mulai.setBackground(new java.awt.Color(255, 255, 255));
         mulai.setDateFormatString("yyyy-MM-dd");
+        jPanel1.add(mulai, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, 150, 30));
 
+        akhir.setBackground(new java.awt.Color(255, 255, 255));
         akhir.setDateFormatString("yyyy-MM-dd");
+        jPanel1.add(akhir, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 110, 160, 30));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(71, 71, 71)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nama_barang, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(mulai, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(nama_penjual, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                    .addComponent(harga, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                    .addComponent(akhir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(51, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(nama_barang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(nama_penjual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(harga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(mulai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(akhir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(30, 30, 30))))
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 670, 170));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        addbtn.setBackground(new java.awt.Color(0, 102, 255));
+        addbtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        addbtn.setForeground(new java.awt.Color(255, 255, 255));
         addbtn.setText("Add");
         addbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addbtnActionPerformed(evt);
             }
         });
+        jPanel2.add(addbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, 80, 40));
 
+        editbtn.setBackground(new java.awt.Color(0, 102, 255));
+        editbtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        editbtn.setForeground(new java.awt.Color(255, 255, 255));
         editbtn.setText("Edit");
         editbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 editbtnActionPerformed(evt);
             }
         });
+        jPanel2.add(editbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 80, 40));
 
+        deletebtn.setBackground(new java.awt.Color(0, 102, 255));
+        deletebtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        deletebtn.setForeground(new java.awt.Color(255, 255, 255));
         deletebtn.setText("Delete");
         deletebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deletebtnActionPerformed(evt);
             }
         });
+        jPanel2.add(deletebtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 80, 40));
 
+        uploadbtn.setBackground(new java.awt.Color(0, 102, 255));
+        uploadbtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        uploadbtn.setForeground(new java.awt.Color(255, 255, 255));
         uploadbtn.setText("Upload");
         uploadbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 uploadbtnActionPerformed(evt);
             }
         });
+        jPanel2.add(uploadbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, 40));
 
+        detailbtn.setBackground(new java.awt.Color(0, 102, 255));
+        detailbtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        detailbtn.setForeground(new java.awt.Color(255, 255, 255));
         detailbtn.setText("Detail");
         detailbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 detailbtnActionPerformed(evt);
             }
         });
+        jPanel2.add(detailbtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 20, 73, 40));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(uploadbtn)
-                .addGap(113, 113, 113)
-                .addComponent(addbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(103, 103, 103)
-                .addComponent(editbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(deletebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(89, 89, 89)
-                .addComponent(detailbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addbtn)
-                    .addComponent(editbtn)
-                    .addComponent(deletebtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(uploadbtn)
-                    .addComponent(detailbtn))
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 920, 80));
+
+        jPanel3.setBackground(new java.awt.Color(0, 102, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         tabel_barang.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -233,92 +218,40 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
         });
         jScrollPane1.setViewportView(tabel_barang);
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 880, 230));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Daftar Barang");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 924, 50));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 252, 924, 320));
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jDesktopPane1.setBackground(new java.awt.Color(255, 255, 255));
         jDesktopPane1.setMaximumSize(new java.awt.Dimension(228, 162));
         jDesktopPane1.setMinimumSize(new java.awt.Dimension(228, 162));
+        jDesktopPane1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         image.setMaximumSize(new java.awt.Dimension(228, 162));
         image.setMinimumSize(new java.awt.Dimension(228, 162));
         image.setPreferredSize(new java.awt.Dimension(228, 162));
+        jDesktopPane1.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 170));
 
-        jDesktopPane1.setLayer(image, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jPanel4.add(jDesktopPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 250, 170));
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(image, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 170));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    private ImageIcon ResizePhoto(String ImagePath, byte[] pic)
-    {
+    private ImageIcon ResizePhoto(String ImagePath, byte[] pic) {
         ImageIcon MyImage = null;
-        if(ImagePath != null)
-        {
+        if (ImagePath != null) {
             MyImage = new ImageIcon(ImagePath);
-        }else{
+        } else {
             MyImage = new ImageIcon(pic);
         }
         Image img = MyImage.getImage();
@@ -329,15 +262,16 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
     int Key = 0;
     private void tabel_barangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabel_barangMouseClicked
 
-        DefaultTableModel model = (DefaultTableModel)tabel_barang.getModel();
+        DefaultTableModel model = (DefaultTableModel) tabel_barang.getModel();
         int MyIndex = tabel_barang.getSelectedRow();
         try {
             Key = Integer.valueOf(model.getValueAt(MyIndex, 0).toString());
+            ID.setText(String.valueOf(Key));
             nama_barang.setText(model.getValueAt(MyIndex, 1).toString());
             nama_penjual.setText(model.getValueAt(MyIndex, 2).toString());
             harga.setText(model.getValueAt(MyIndex, 3).toString());
             FetchPhoto();
-            java.util.Date awald =  new SimpleDateFormat("yyyy-MM-dd").parse(model.getValueAt(MyIndex, 5).toString());
+            java.util.Date awald = new SimpleDateFormat("yyyy-MM-dd").parse(model.getValueAt(MyIndex, 5).toString());
             mulai.setDate(awald);
             java.util.Date akhird = new SimpleDateFormat("yyyy-MM-dd").parse(model.getValueAt(MyIndex, 6).toString());
             akhir.setDate(akhird);
@@ -347,20 +281,18 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
     }//GEN-LAST:event_tabel_barangMouseClicked
 
     private void addbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addbtnActionPerformed
-        if(nama_barang.getText().isEmpty() || nama_penjual.getText().isEmpty() || ID.getText().isEmpty() || harga.getText().isEmpty()) 
-        {
+        if (nama_barang.getText().isEmpty() || nama_penjual.getText().isEmpty() || harga.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Enter The data");
-        }else{
+        } else {
             add();
         }
-        
+
     }//GEN-LAST:event_addbtnActionPerformed
 
     private void editbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editbtnActionPerformed
-        if(imgpath != null)
-        {
+        if (imgpath != null) {
             edit();
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Select Photo");
             image.setIcon(null);
             image.setText("");
@@ -369,10 +301,9 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
     }//GEN-LAST:event_editbtnActionPerformed
 
     private void deletebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletebtnActionPerformed
-        if(Key == 0) 
-        {
+        if (Key == 0) {
             JOptionPane.showMessageDialog(this, "Select the data");
-        }else{
+        } else {
             delete();
         }
     }//GEN-LAST:event_deletebtnActionPerformed
@@ -380,14 +311,13 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
     private void uploadbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uploadbtnActionPerformed
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images","jpg","png");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.images", "jpg", "png");
         chooser.addChoosableFileFilter(filter);
         int result = chooser.showSaveDialog(null);
-        if(result == JFileChooser.APPROVE_OPTION)
-        {
+        if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = chooser.getSelectedFile();
             String path = selectedFile.getAbsolutePath();
-            image.setIcon(ResizePhoto(path,null));
+            image.setIcon(ResizePhoto(path, null));
             imgpath = path;
         }
     }//GEN-LAST:event_uploadbtnActionPerformed
@@ -461,22 +391,24 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
     @Override
     public void add() {
         try {
-            String str ="INSERT INTO barangs(ID, nama_barang, nama_penjual, harga, photo, mulai, akhir) VALUES(?,?,?,?,?,?,?)";
-            java.util.Date awald =  mulai.getDate();
-            java.util.Date akhird=  akhir.getDate();
+            String str = "INSERT INTO barangs(nama_barang, nama_penjual, harga, photo, mulai, akhir) VALUES(?,?,?,?,?,?)";
+            java.util.Date awald = mulai.getDate();
+            java.util.Date akhird = akhir.getDate();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String strmulai = sdf.format(awald);
             String strakhir = sdf.format(akhird);
+
             PreparedStatement Add = con.prepareStatement(str);
             InputStream img = new FileInputStream(imgpath);
-            Add.setInt(1, Integer.valueOf(ID.getText()));
-            Add.setString(2, nama_barang.getText());
-            Add.setString(3, nama_penjual.getText());
-            Add.setInt(4, Integer.valueOf(harga.getText()));
-            Add.setBlob(5, img);
-            Add.setString(6, strmulai);
-            Add.setString(7, strakhir);
+
+            Add.setString(1, nama_barang.getText());
+            Add.setString(2, nama_penjual.getText());
+            Add.setInt(3, Integer.valueOf(harga.getText()));
+            Add.setBlob(4, img);
+            Add.setString(5, strmulai);
+            Add.setString(6, strakhir);
             Add.executeUpdate();
+
             JOptionPane.showMessageDialog(this, "Barang dimasukkan");
             con.close();
             DisplayTable();
@@ -489,23 +421,23 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
 
     @Override
     public void delete() {
-        try{
+        try {
             con = new Koneksi().konek();
-            String Query = "Delete from barangs where ID="+Key;
+            String Query = "Delete from barangs where ID=" + Key;
             Statement Del = con.createStatement();
             Del.executeUpdate(Query);
             JOptionPane.showMessageDialog(this, "Barang terhapus");
             DisplayTable();
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
     }
 
     @Override
     public void edit() {
-        try{
-            java.util.Date awald =  mulai.getDate();
-            java.util.Date akhird=  akhir.getDate();
+        try {
+            java.util.Date awald = mulai.getDate();
+            java.util.Date akhird = akhir.getDate();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             String strmulai = sdf.format(awald);
             String strakhir = sdf.format(akhird);
@@ -520,77 +452,83 @@ public final class Admin extends javax.swing.JFrame implements Halaman {
             UpdateQuery.setString(6, strmulai);
             UpdateQuery.setString(7, strakhir);
             UpdateQuery.setInt(5, Key);
-            if(UpdateQuery.executeUpdate() == 1){
+            if (UpdateQuery.executeUpdate() == 1) {
                 JOptionPane.showMessageDialog(this, "Barang diupdate");
                 DisplayTable();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(this, "Missing Information");
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e);
         }
     }
 
     @Override
     public void detail() {
-        DetailItem dtlitem = new DetailItem();
-        dtlitem.setVisible(true);
-        dispose();
-        String Query = "select * from barangs where ID="+Key;
-        try{
-            con = new Koneksi().konek();
-            st = con.createStatement();
-            rs = st.executeQuery(Query);
-            if(rs.next())
-            {
-                dtlitem.image.setIcon(ResizePhoto(null, rs.getBytes("photo")));
-                dtlitem.deskripsi.setText("Nama Barang : "+rs.getString("nama_barang")+"\nNama Penjual : "+rs.getString("nama_penjual")+"\nHarga Awal : "+rs.getInt("harga")+"\nPelelangan Dimulai Pada : "+rs.getString("mulai"));
-                dtlitem.carapenawaran.setText("Open Bidding");
-                dtlitem.batasakhir.setText(rs.getString("akhir"));
-                dtlitem.id.setText(rs.getString("ID"));
-            }
-        }catch(Exception e){
-            
+        if (Key == 0) {
+            JOptionPane.showMessageDialog(this, "Tidak ada barang yang dipilih!");
+        } else {
+            DetailItem dtlitem = new DetailItem(Key);
+            dtlitem.setVisible(true);
+            dispose();
         }
+
     }
-byte[] photo=null;
-String filename=null;
+    byte[] photo = null;
+    String filename = null;
 
     @Override
     public void GetTable() {
-        try{
+        try {
             con = new Koneksi().konek();
             st = con.createStatement();
             String Query = "SELECT * FROM 'barangs'";
             rs = st.executeQuery(Query);
-        }catch(Exception e){  
+        } catch (Exception e) {
         }
     }
 
     @Override
     public void DisplayTable() {
-        try{
-            con= new Koneksi().konek();
-            st = con.createStatement();
-            rs = st.executeQuery("Select * from barangs");
-            tabel_barang.setModel(DbUtils.resultSetToTableModel(rs));
-        }catch(Exception e){
+
+        tabelmodel.getDataVector().removeAllElements();
+        tabelmodel.fireTableDataChanged();
+        try {
+            con = new Koneksi().konek();
+            Statement state = con.createStatement();
+            String sql = "SELECT * FROM barangs";
+
+            ResultSet rs = state.executeQuery(sql);
+
+            while (rs.next()) {
+                Object obj[] = new Object[7];
+                obj[0] = rs.getString("ID");
+                obj[1] = rs.getString("nama_barang");
+                obj[2] = rs.getString("nama_penjual");
+                obj[3] = rs.getString("harga");
+                obj[4] = rs.getBlob("photo");
+                obj[5] = rs.getString("mulai");
+                obj[6] = rs.getString("akhir");
+
+                tabelmodel.addRow(obj);
+            }
+        } catch (Exception ex) {
+            System.out.println("Error Display Table: " + ex);
         }
     }
 
     @Override
     public void FetchPhoto() {
-        String Query = "select photo from barangs where ID="+Key;
-        try{
+        String Query = "select photo from barangs where ID=" + Key;
+        try {
             con = new Koneksi().konek();
             st = con.createStatement();
             rs = st.executeQuery(Query);
-            if(rs.next())
-            {
+            if (rs.next()) {
                 image.setIcon(ResizePhoto(null, rs.getBytes("photo")));
             }
-        }catch(Exception e){
-            
+        } catch (Exception e) {
+
         }
     }
 }

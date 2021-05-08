@@ -11,15 +11,17 @@ package auction;
  */
 public abstract class Auth {
     
-    String nama;
-    String username;
-    String gender;
-    String tglLahir;
-    String alamat;
-    String noTelp;
-    String role;
+    public static String id;
+    public static String nama;
+    public static String username;
+    public static String gender;
+    public static String tglLahir;
+    public static String alamat;
+    public static String noTelp;
+    public static String role;
     
-    public Auth(String nama, String username, String gender, String tglLahir, String alamat, String noTelp){
+    public Auth(String id, String nama, String username, String gender, String tglLahir, String alamat, String noTelp){
+        this.id = id;
         this.nama = nama;
         this.username = username;
         this.gender = gender;

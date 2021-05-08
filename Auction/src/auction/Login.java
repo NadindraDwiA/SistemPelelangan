@@ -152,14 +152,14 @@ public class Login extends javax.swing.JFrame {
                     
                     this.dispose();
                     if(role.equalsIgnoreCase("admin")){
-                       Auth auth = new AuthAdmin(rs.getString("nama_lengkap"), rs.getString("username"), rs.getString("gender"), rs.getString("tgl_lahir"), rs.getString("alamat"), rs.getString("no_telepon"));
+                       Auth auth = new AuthAdmin(rs.getString("id"), rs.getString("nama_lengkap"), rs.getString("username"), rs.getString("gender"), rs.getString("tgl_lahir"), rs.getString("alamat"), rs.getString("no_telepon"));
                        auth.setRole();
                        JOptionPane.showMessageDialog(null, auth.welcomeMessage());
                        
                        Admin adm = new Admin();
                        adm.show();
                     }else {
-                       Auth auth = new AuthUser(rs.getString("nama_lengkap"), rs.getString("username"), rs.getString("gender"), rs.getString("tgl_lahir"), rs.getString("alamat"), rs.getString("no_telepon"));
+                       Auth auth = new AuthUser(rs.getString("id"), rs.getString("nama_lengkap"), rs.getString("username"), rs.getString("gender"), rs.getString("tgl_lahir"), rs.getString("alamat"), rs.getString("no_telepon"));
                        auth.setRole();
                        JOptionPane.showMessageDialog(null, auth.welcomeMessage());
                     

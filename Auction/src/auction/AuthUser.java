@@ -11,8 +11,8 @@ package auction;
  */
 public class AuthUser extends Auth {
 
-    public AuthUser(String nama, String username, String gender, String tglLahir, String alamat, String noTelp){
-        super(nama, username, gender, tglLahir, alamat, noTelp);
+    public AuthUser(String id, String nama, String username, String gender, String tglLahir, String alamat, String noTelp){
+        super(id, nama, username, gender, tglLahir, alamat, noTelp);
     }
     
     @Override
