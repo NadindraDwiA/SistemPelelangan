@@ -28,10 +28,4 @@ public class AuthAdmin extends Auth{
         return message;
     }
 
-    @Override
-    public boolean manageItemAccess() {
-        return true;
-    }
-    
-    
 }

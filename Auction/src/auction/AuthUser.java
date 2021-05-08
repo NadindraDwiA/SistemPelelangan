@@ -27,10 +27,4 @@ public class AuthUser extends Auth {
         
         return message;
     }
-
-    @Override
-    public boolean manageItemAccess() {
-        return false;
-    }
-    
 }

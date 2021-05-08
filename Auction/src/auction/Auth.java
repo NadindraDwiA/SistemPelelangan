@@ -32,5 +32,4 @@ public abstract class Auth {
     
     public abstract void setRole();
     public abstract String welcomeMessage();
-    public abstract boolean manageItemAccess();
 }
